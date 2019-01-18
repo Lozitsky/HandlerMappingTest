@@ -22,5 +22,10 @@
     <!-- if we want to use the form, we need to type "form....htm" after "/" in our browser -->
     <bean name="/form*.htm" class="com.kirilo.springMVC.controllers.LoginController" p:formView="login"/>
 
+    <!-- https://examples.javacodegeeks.com/enterprise-java/spring/mvc/spring-mvc-interceptor-tutorial/ -->
+    <mvc:interceptors>
+        <bean class="com.kirilo.springMVC.interceptors.TimeInterceptor"/>
+    </mvc:interceptors>
+
 
 </beans>
