@@ -1,1 +1,1 @@
-# **_`The configure Handler Mapper in dispatcher-servlet.xml and using Controller for the form without annotation`_**
+# **_`The configure Handler Mapper in dispatcher-servlet.xml and using Controller for the form without annotation. Used Interceptor for defining the controller's running time. Its actions are logging.`_**
