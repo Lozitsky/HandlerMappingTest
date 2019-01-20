@@ -1,7 +1,11 @@
 package com.kirilo.springMVC.models;
 
 public class User {
+    /*@Size(min = 6, message = "Ім'я повинно містити більше 6 символів")
+    @NotNull*/
     private String name;
+/*    @Size(min = 8, max = 20, message = "Пароль повиненн бути від 8 до 20 символів")
+    @NotNull*/
     private String password;
     private boolean admin;
 

@@ -11,9 +11,9 @@
     <url>http://maven.apache.org</url>
     <packaging>war</packaging>
 
-<!--    <properties>
-        <org.springframework.version>5.1.4.RELEASE</org.springframework.version>
-    </properties>-->
+    <properties>
+        <org.springframework.version>3.2.3.RELEASE</org.springframework.version>
+    </properties>
 
     <!--https://stackoverflow.com/questions/13390239/how-to-configure-custom-maven-project-structure-->
     <!--https://intellij-support.jetbrains.com/hc/en-us/community/posts/115000091424-Web-Facet-Configuration-keeps-resetting-after-every-Maven-project-import-->
@@ -34,11 +34,11 @@
 
     <dependencies>
 
-<!--        <dependency>
+        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
             <version>${org.springframework.version}</version>
-        </dependency>-->
+        </dependency>
 
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -48,17 +48,16 @@
         </dependency>
 
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
-            <version>3.2.3.RELEASE</version>
-        </dependency>
-
-        <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>6.0.14.Final</version>
+        </dependency>
 
     </dependencies>
     

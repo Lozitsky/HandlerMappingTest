@@ -20,12 +20,19 @@
     <bean name="/" class="com.kirilo.springMVC.controllers.HelloPeopleController"/>
 
     <!-- if we want to use the form, we need to type "form....htm" after "/" in our browser -->
-    <bean name="/form*.htm" class="com.kirilo.springMVC.controllers.LoginController" p:formView="login"/>
+    <bean name="/form*.htm" class="com.kirilo.springMVC.controllers.LoginController" p:formView="login" p:successView="main" p:validator-ref="userValidator"/>
 
     <!-- https://examples.javacodegeeks.com/enterprise-java/spring/mvc/spring-mvc-interceptor-tutorial/ -->
     <mvc:interceptors>
         <bean class="com.kirilo.springMVC.interceptors.TimeInterceptor"/>
     </mvc:interceptors>
+
+    <!-- Validator config -->
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basename" value="messages"/>
+    </bean>
+
+    <bean id="userValidator" class="com.kirilo.springMVC.validator.LoginValidator"/>
 
 
 </beans>
