@@ -12,7 +12,7 @@
     <packaging>war</packaging>
 
     <properties>
-        <org.springframework.version>3.2.3.RELEASE</org.springframework.version>
+        <org.springframework.version>3.2.18.RELEASE</org.springframework.version>
     </properties>
 
     <!--https://stackoverflow.com/questions/13390239/how-to-configure-custom-maven-project-structure-->
@@ -53,11 +53,11 @@
             <version>1.2.17</version>
         </dependency>
 
-        <dependency>
+<!--        <dependency>
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
             <version>6.0.14.Final</version>
-        </dependency>
+        </dependency>-->
 
     </dependencies>
     

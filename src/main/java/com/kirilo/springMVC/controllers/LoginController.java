@@ -18,7 +18,7 @@ public class LoginController extends SimpleFormController {
     @Override
     protected ModelAndView onSubmit(Object command) throws Exception {
         User user = (User) command;
-        logger.info("LoginController is invoked! ");
+        logger.info("LoginController is invoked!");
         return new ModelAndView("main", "user", user);
     }
 
