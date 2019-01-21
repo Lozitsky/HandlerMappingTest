@@ -15,23 +15,19 @@
     <link href="<c:url value="/resources/css/reset.css"/>" rel="stylesheet">
     <link href="<c:url value="/resources/css/error.css"/>" rel="stylesheet">
     <title>Login Page</title>
-
 </head>
 <body>
 
 <%--https://stackoverflow.com/questions/46989072/org-apache-jasper-jasperexception-web-inf-views-home-jsp-line-25-column/48364974--%>
-<%-- https://dzone.com/sites/all/files/SpringExample8.zip --%>
 
 <%--@elvariable id="user" type="com.kirilo.springMVC.models.User"--%>
 <form:form method="post" commandName="user" class="box login">
     <fieldset class="boxBody">
-        <form:label path="name">Username:</form:label>
+        <form:label path="name">Username: <form:errors path="name" cssClass="error"/></form:label>
         <form:input path="name" placeholder="your name" required=""/>
-        <form:errors path="name" cssClass="error"/>
 
-        <form:label path="password">Password:</form:label>
+        <form:label path="password">Password: <form:errors path="password" cssClass="error"/></form:label>
         <form:password path="password" placeholder="your password" required=""/>
-        <form:errors path="password" cssClass="error"/>
     </fieldset>
     <footer>
         <form:checkbox path="admin"/>

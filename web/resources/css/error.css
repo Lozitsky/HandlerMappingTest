@@ -1,4 +1,8 @@
 .error {
     color: #ff0000;
     font-style: italic;
+    font-size: smaller;
+    float: right;
+    /*margin-left:10px;*/
+    /*padding-right: 21 px;*/
 }
