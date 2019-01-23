@@ -1,5 +1,9 @@
 package com.kirilo.springMVC.models;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+//use for converting to xml in the restful service
+@XmlRootElement
 public class User {
     /*@Size(min = 6, message = "Ім'я повинно містити більше 6 символів")
     @NotNull*/
