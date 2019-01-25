@@ -5,7 +5,13 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <mvc:annotation-driven/>
+    <mvc:annotation-driven>
+        <!-- custom argument resolver for type Date -->
+        <!-- https://blog.trifork.com/2011/12/08/use-immutable-objects-in-your-spring-mvc-controller-by-implementing-your-own-webargumentresolver/ -->
+        <mvc:argument-resolvers>
+            <bean class="com.kirilo.springMVC.resolver.ContextExtractingWebArgumentResolver"></bean>
+        </mvc:argument-resolvers>
+    </mvc:annotation-driven>
 
     <mvc:resources mapping="/resources/**" location="/resources/"/>
 
@@ -60,6 +66,16 @@
     <!--<bean name="/get-json-user*" class="com.kirilo.springMVC.controllers.UserRestController" />-->
 
     <!--<context:component-scan base-package="com.kirilo.springMVC.controllers" />-->
+
+
+    <!-- only for spring less Spring 3.1 RC1 -->
+<!--https://blog.trifork.com/2011/12/08/use-immutable-objects-in-your-spring-mvc-controller-by-implementing-your-own-webargumentresolver/-->
+
+    <!--    <bean id="dateResolver" class="com.kirilo.springMVC.resolver.ContextExtractingWebArgumentResolver"/>
+
+    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"
+          p:customArgumentResolver-ref="dateResolver">
+    </bean>-->
 
 
 </beans>

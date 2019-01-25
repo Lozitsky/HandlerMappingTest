@@ -14,7 +14,6 @@ public class HelloPeopleController extends AbstractController {
                                                  HttpServletResponse httpServletResponse) throws Exception {
         ModelAndView modelAndView = new ModelAndView("hello", "msg", "Hello Message!");
         modelAndView.addObject("title", "Hello Title");
-
         logger.info("HelloPeopleController is invoked! ");
 
         return modelAndView;
