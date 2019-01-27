@@ -1,3 +1,4 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: Надія
@@ -12,8 +13,8 @@
     <title>Main Page</title>
 </head>
 <body>
-<p>Hello ${user.name}</p>
-<p>Your password is ${user.password}</p>
-<p>Admin ${user.admin}</p>
+<p><spring:message code="greeting.hello"/> ${user.name}</p>
+<p><spring:message code="info.password"/> ${user.password}</p>
+<p><spring:message code="admin.value"/> ${user.admin}</p>
 </body>
 </html>

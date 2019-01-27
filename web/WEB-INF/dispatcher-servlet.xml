@@ -41,10 +41,12 @@
 
     <!-- Validator config -->
     <!--<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">-->
+    <!-- https://stackoverflow.com/questions/5618071/spring-i18n-problem-with-multiple-property-files -->
     <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
         <!-- use "resources/..." directory for ResourceBundleMessageSource -->
         <!--<property name="basename" value="messages"/>-->
-        <property name="basename" value="classpath:messages" />
+        <!--<property name="basename" value="classpath:messages" />-->
+        <property name="basenames" value="classpath:messages,classpath:validation"/>
         <property name="defaultEncoding" value="UTF-8"/>
     </bean>
 
