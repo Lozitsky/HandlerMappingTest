@@ -1,7 +1,7 @@
 .error {
     color: #ff0000;
     font-style: italic;
-    font-size: smaller;
+    font-size: 0.8em;
     float: right;
     /*margin-left:10px;*/
     /*padding-right: 21 px;*/

@@ -40,8 +40,12 @@
     </mvc:interceptors>
 
     <!-- Validator config -->
-    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
-        <property name="basename" value="messages"/>
+    <!--<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">-->
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <!-- use "resources/..." directory for ResourceBundleMessageSource -->
+        <!--<property name="basename" value="messages"/>-->
+        <property name="basename" value="classpath:messages" />
+        <property name="defaultEncoding" value="UTF-8"/>
     </bean>
 
     <bean id="userValidator" class="com.kirilo.springMVC.validator.LoginValidator"/>
