@@ -52,6 +52,8 @@
 
     <bean id="userValidator" class="com.kirilo.springMVC.validator.LoginValidator"/>
 
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
+
 
 <!--    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
         <property name="messageConverters">
