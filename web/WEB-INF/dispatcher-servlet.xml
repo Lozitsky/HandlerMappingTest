@@ -36,6 +36,10 @@
 
     <!-- https://examples.javacodegeeks.com/enterprise-java/spring/mvc/spring-mvc-interceptor-tutorial/ -->
     <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/*"/>
+            <ref bean="localChangeInterceptor"/>
+        </mvc:interceptor>
         <bean class="com.kirilo.springMVC.interceptors.TimeInterceptor"/>
     </mvc:interceptors>
 
@@ -53,6 +57,14 @@
     <bean id="userValidator" class="com.kirilo.springMVC.validator.LoginValidator"/>
 
     <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
+
+    <bean id="localChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+        <property name="paramName" value="lang"/>
+    </bean>
+
+    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+        <property name="defaultLocale" value="uk"/>
+    </bean>
 
 
 <!--    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">

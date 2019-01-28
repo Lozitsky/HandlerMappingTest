@@ -25,6 +25,10 @@
 <%--@elvariable id="loginDto" type="com.kirilo.springMVC.models.LoginDTO"--%>
 <form:form method="post" commandName="loginDto" class="box login">
     <fieldset class="boxBody">
+        <span style="float: top">
+            <a href="?lang=uk">uk</a>
+            <a href="?lang=en">en</a>
+        </span>
         <form:label path="name"><spring:message code="name.value"/> <form:errors path="name" cssClass="error"/></form:label>
         <spring:message code="name.placeholder" var="namePlaceholder"/>
         <form:input path="name" placeholder="${namePlaceholder}" />
