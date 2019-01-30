@@ -17,6 +17,9 @@ body{
     margin:0 auto 30px;
     overflow:hidden;
 }
+.box .lang{
+    text-align: right;
+}
 .box.login
 {
     height:260px;

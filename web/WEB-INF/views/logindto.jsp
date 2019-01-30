@@ -23,12 +23,12 @@
 
 <%-- https://stackoverflow.com/questions/44198519/internationalization-of-placeholders-in-spring --%>
 <%--@elvariable id="loginDto" type="com.kirilo.springMVC.models.LoginDTO"--%>
-<form:form method="post" commandName="loginDto" class="box login">
+<form:form method="post" commandName="loginDto" action="check-user.dto" class="box login">
     <fieldset class="boxBody">
-        <span style="float: top">
+        <p style="float: right">
             <a href="?lang=uk">uk</a>
             <a href="?lang=en">en</a>
-        </span>
+        </p>
         <form:label path="name"><spring:message code="name.value"/> <form:errors path="name" cssClass="error"/></form:label>
         <spring:message code="name.placeholder" var="namePlaceholder"/>
         <form:input path="name" placeholder="${namePlaceholder}" />

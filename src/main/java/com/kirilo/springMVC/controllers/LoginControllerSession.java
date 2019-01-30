@@ -4,18 +4,19 @@ import com.kirilo.springMVC.models.User;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.util.Locale;
 
 //https://www.intertech.com/Blog/understanding-spring-mvc-model-and-session-attributes/
 
@@ -35,23 +36,47 @@ public class LoginControllerSession {
     }
 
     @ModelAttribute("user")
-    private User addUser(){
+    private User addUser() {
         return new User();
     }
 
-    @RequestMapping("/login.do")
-    protected String onSubmit(@ModelAttribute("user") @Validated User user, BindingResult bindingResult) {
+    @Autowired
+    private MessageSource messageSource;
+
+
+    @RequestMapping(value = "/login.do", method = RequestMethod.GET)
+    public String main(@ModelAttribute("user") User user, BindingResult bindingResult, Locale locale, HttpSession session, Model model) {
+
+        if (!bindingResult.hasErrors()) {
+            if (user.getName() != null && user.getPassword() != null && !user.getName().equals("") && !user.getPassword().equals("")) {
+                User sessionUser = (User) session.getAttribute("user");
+                model.addAttribute("locale", messageSource.getMessage("locale.value", new String[]{locale.getDisplayName(locale)}, locale));
+                return "main";
+            }
+            logger.info(locale.getDisplayLanguage());
+            String message = messageSource.getMessage("locale.value", new String[]{locale.getDisplayName(locale)}, locale);
+            logger.info(message);
+        }
+        return "login";
+    }
+
+    @RequestMapping(value = "/check-user", method = RequestMethod.POST)
+    protected String onSubmit(Locale locale, @ModelAttribute("user") @Validated User user, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             logger.info("Returning login.jsp page");
             return "login";
+        }
+
+        if (user != null && user.getName() != "" && user.getPassword() != "") {
+            model.addAttribute("locale", messageSource.getMessage("locale.value", new String[]{locale.getDisplayName(locale)}, locale));
         }
         logger.info("Returning main.jsp page");
         return "main";
     }
 
-//    https://stackoverflow.com/questions/17955777/redirect-to-an-external-url-from-controller-action-in-spring-mvc
+    //    https://stackoverflow.com/questions/17955777/redirect-to-an-external-url-from-controller-action-in-spring-mvc
     @RequestMapping("/login.off")
-    protected void setCompleteSession(SessionStatus status, HttpServletResponse httpServletResponse){
+    protected void setCompleteSession(SessionStatus status, HttpServletResponse httpServletResponse) {
         status.setComplete();
         httpServletResponse.setHeader("Location", "login.do");
         httpServletResponse.setStatus(302);
