@@ -14,6 +14,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Locale;
@@ -60,17 +61,30 @@ public class LoginControllerSession {
         return "login";
     }
 
+    //    http://www.javapractices.com/topic/TopicAction.do?Id=181
     @RequestMapping(value = "/check-user", method = RequestMethod.POST)
-    protected String onSubmit(Locale locale, @ModelAttribute("user") @Validated User user, BindingResult bindingResult, Model model) {
+    public String onSubmit(Locale locale, @ModelAttribute("user") @Validated User user, BindingResult bindingResult, HttpSession session) {
         if (bindingResult.hasErrors()) {
             logger.info("Returning login.jsp page");
             return "login";
         }
 
         if (user != null && user.getName() != "" && user.getPassword() != "") {
-            model.addAttribute("locale", messageSource.getMessage("locale.value", new String[]{locale.getDisplayName(locale)}, locale));
+//            model.addAttribute("locale", messageSource.getMessage("locale.value", new String[]{locale.getDisplayName(locale)}, locale));
+            session.setAttribute("locale", messageSource.getMessage("locale.value", new String[]{locale.getDisplayName(locale)}, locale));
         }
         logger.info("Returning main.jsp page");
+        return "redirect:/mainpage";
+    }
+
+    // http://blog.niteshapte.com/2013-07-15-how-to-prevent-duplicate-form-submission-in-spring-mvc.htm
+    @RequestMapping(value = "/mainpage", method = RequestMethod.GET)
+    public String goMainPage(HttpServletRequest request, HttpSession session, Locale locale) {
+
+        String sessionAttribute = (String) session.getAttribute("locale");
+        String message = messageSource.getMessage("locale.value", new String[]{sessionAttribute}, locale);
+        logger.info("Message: " + message);
+
         return "main";
     }
 

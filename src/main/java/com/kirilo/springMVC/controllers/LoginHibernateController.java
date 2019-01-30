@@ -12,11 +12,15 @@ import org.springframework.validation.Validator;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.Locale;
+import java.util.Map;
 
 @Controller
 @SessionAttributes("loginDto")
@@ -58,16 +62,27 @@ public class LoginHibernateController {
     }
 
     @RequestMapping(value = "/check-user.dto", method = RequestMethod.POST)
-    public String postLoginForm(Locale locale, @ModelAttribute("loginDto") @Valid LoginDTO loginDTO, BindingResult result, Model model) {
+    public String postLoginForm(Locale locale, @ModelAttribute("loginDto") @Valid LoginDTO loginDTO, BindingResult result, RedirectAttributes attributes) {
         if (result.hasErrors()) {
             logger.info("Returning logindto.jsp page");
             return "logindto";
         }
 
         if (loginDTO != null && loginDTO.getName() != "" && loginDTO.getPassword() != "") {
-            model.addAttribute("locale", messageSource.getMessage("locale.value", new String[]{locale.getDisplayName(locale)}, locale));
+            attributes.addFlashAttribute("locale", messageSource.getMessage("locale.value", new String[]{locale.getDisplayName(locale)}, locale));
         }
         logger.info("Returning main.dto.jsp page");
+        return "redirect:/mainpage.dto";
+    }
+
+    @RequestMapping(value = "/mainpage.dto", method = RequestMethod.GET)
+    public String goMainPage(HttpServletRequest request){
+        Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+        if (flashMap != null) {
+            logger.info("redirect!");
+        } else {
+            logger.info("update!");
+        }
         return "main.dto";
     }
 
