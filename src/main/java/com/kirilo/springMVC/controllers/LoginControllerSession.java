@@ -74,11 +74,11 @@ public class LoginControllerSession {
             session.setAttribute("locale", messageSource.getMessage("locale.value", new String[]{locale.getDisplayName(locale)}, locale));
         }
         logger.info("Returning main.jsp page");
-        return "redirect:/mainpage";
+        return "redirect:/main-page";
     }
 
     // http://blog.niteshapte.com/2013-07-15-how-to-prevent-duplicate-form-submission-in-spring-mvc.htm
-    @RequestMapping(value = "/mainpage", method = RequestMethod.GET)
+    @RequestMapping(value = "/main-page", method = RequestMethod.GET)
     public String goMainPage(HttpServletRequest request, HttpSession session, Locale locale) {
 
         String sessionAttribute = (String) session.getAttribute("locale");

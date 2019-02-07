@@ -56,6 +56,10 @@
 
     <bean id="userValidator" class="com.kirilo.springMVC.validator.LoginValidator"/>
 
+    <bean id="fileValidator" class="com.kirilo.springMVC.validator.FileValidator"/>
+
+    <bean id="multipleFileValidator" class="com.kirilo.springMVC.validator.MultipleFileValidator"/>
+
     <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
 
     <bean id="localChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
@@ -65,6 +69,14 @@
     <bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
         <property name="defaultLocale" value="uk"/>
     </bean>
+
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- 100 mb -->
+        <property name="maxUploadSize" value="104857600"/>
+        <property name="defaultEncoding" value="UTF-8"/>
+        <property name="resolveLazily" value="true"/>
+    </bean>
+
 
 
 <!--    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">

@@ -17,5 +17,13 @@
 <p><spring:message code="info.password"/> ${user.password}</p>
 <p><spring:message code="admin.value"/> ${user.admin}</p>
 <p><spring:message code="locale.name"/> ${locale} </p>
+
+<form method="post" action="upload-file" enctype="multipart/form-data">
+    File to upload: <input type="file" name="file">
+    <br/>
+    <input type="submit" value="Upload">
+    Press here to upload the file!
+</form>
+
 </body>
 </html>

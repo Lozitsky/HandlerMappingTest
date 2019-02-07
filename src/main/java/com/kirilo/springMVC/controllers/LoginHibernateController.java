@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.MessageSource;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,8 +13,10 @@ import org.springframework.validation.Validator;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -52,7 +55,7 @@ public class LoginHibernateController {
             if (loginDTO.getName() != null && loginDTO.getPassword() != null && !loginDTO.getName().equals("") && !loginDTO.getPassword().equals("")) {
                 LoginDTO sessionUser = (LoginDTO) session.getAttribute("loginDto");
                 model.addAttribute("locale", messageSource.getMessage("locale.value", new String[]{locale.getDisplayName(locale)}, locale));
-                return "main.dto";
+                return "multiple-main.dto";
             }
             logger.info(locale.getDisplayLanguage());
             String message = messageSource.getMessage("locale.value", new String[]{locale.getDisplayName(locale)}, locale);
@@ -62,17 +65,25 @@ public class LoginHibernateController {
     }
 
     @RequestMapping(value = "/check-user.dto", method = RequestMethod.POST)
-    public String postLoginForm(Locale locale, @ModelAttribute("loginDto") @Valid LoginDTO loginDTO, BindingResult result, RedirectAttributes attributes) {
+    public ModelAndView postLoginForm(Locale locale, @ModelAttribute("loginDto") @Valid LoginDTO loginDTO, BindingResult result, RedirectAttributes attributes) {
+
+        ModelAndView modelAndView = new ModelAndView();
+
         if (result.hasErrors()) {
             logger.info("Returning logindto.jsp page");
-            return "logindto";
+            modelAndView.setViewName("logindto");
+//            return modelAndView;
         }
 
         if (loginDTO != null && loginDTO.getName() != "" && loginDTO.getPassword() != "") {
+            RedirectView redirectView = new RedirectView("mainpage.dto");
+            redirectView.setStatusCode(HttpStatus.MOVED_PERMANENTLY);
+            modelAndView.setView(redirectView);
             attributes.addFlashAttribute("locale", messageSource.getMessage("locale.value", new String[]{locale.getDisplayName(locale)}, locale));
         }
         logger.info("Returning main.dto.jsp page");
-        return "redirect:/mainpage.dto";
+        return modelAndView;
+//        return "redirect:/mainpage.dto";
     }
 
     @RequestMapping(value = "/mainpage.dto", method = RequestMethod.GET)
@@ -83,7 +94,7 @@ public class LoginHibernateController {
         } else {
             logger.info("update!");
         }
-        return "main.dto";
+        return "multiple-main.dto";
     }
 
     @RequestMapping("/logoff")

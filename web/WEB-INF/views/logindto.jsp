@@ -22,10 +22,10 @@
 <%-- https://stackoverflow.com/questions/46989072/org-apache-jasper-jasperexception-web-inf-views-home-jsp-line-25-column/48364974 --%>
 
 <%-- https://stackoverflow.com/questions/44198519/internationalization-of-placeholders-in-spring --%>
-<%--@elvariable id="loginDto" type="com.kirilo.springMVC.models.LoginDTO"--%>
+
 <form:form method="post" commandName="loginDto" action="check-user.dto" class="box login">
     <fieldset class="boxBody">
-        <p style="float: right">
+        <p class="lang">
             <a href="?lang=uk">uk</a>
             <a href="?lang=en">en</a>
         </p>
