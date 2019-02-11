@@ -78,21 +78,30 @@
     </bean>
 
 
+    <bean class="com.kirilo.springMVC.resolver.UserSimpleExceptionResolver" id="userSimpleExceptionResolver">
+        <property name="exceptionMappings">
+            <map>
+                <entry key="Exception" value="generic_error"></entry>
+            </map>
+        </property>
+        <property name="defaultErrorView" value="generic_error"/>
+    </bean>
 
-<!--    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
         <property name="messageConverters">
             <list>
                 <ref bean="jsonMessageConverter"/>
-                <ref bean="xmlMessageConverter"/>
+                <!--<ref bean="xmlMessageConverter"/>-->
             </list>
         </property>
     </bean>
 
-    &lt;!&ndash; Configure bean to convert JSON to POJO and vice versa &ndash;&gt;
+    <!--Configure bean to convert JSON to POJO and vice versa-->
     <bean id="jsonMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
     </bean>
 
-    <bean id="xmlMessageConverter" class="org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter">
+<!--    <bean id="xmlMessageConverter" class="org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter">
     </bean>-->
 
     <!--<bean name="/get-json-user*" class="com.kirilo.springMVC.controllers.UserRestController" />-->

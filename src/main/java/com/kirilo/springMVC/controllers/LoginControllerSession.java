@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 import org.springframework.validation.annotation.Validated;
@@ -46,13 +45,15 @@ public class LoginControllerSession {
 
 
     @RequestMapping(value = "/login.do", method = RequestMethod.GET)
-    public String main(@ModelAttribute("user") User user, BindingResult bindingResult, Locale locale, HttpSession session, Model model) {
+    public String main(@ModelAttribute("user") User user, BindingResult bindingResult, Locale locale, HttpSession session) {
 
         if (!bindingResult.hasErrors()) {
             if (user.getName() != null && user.getPassword() != null && !user.getName().equals("") && !user.getPassword().equals("")) {
                 User sessionUser = (User) session.getAttribute("user");
-                model.addAttribute("locale", messageSource.getMessage("locale.value", new String[]{locale.getDisplayName(locale)}, locale));
-                return "main";
+//                model.addAttribute("locale", messageSource.getMessage("locale.value", new String[]{locale.getDisplayName(locale)}, locale));
+                session.setAttribute("locale", messageSource.getMessage("locale.value", new String[]{locale.getDisplayName(locale)}, locale));
+//                return "main";
+                return "redirect:/main-page";
             }
             logger.info(locale.getDisplayLanguage());
             String message = messageSource.getMessage("locale.value", new String[]{locale.getDisplayName(locale)}, locale);
@@ -70,7 +71,6 @@ public class LoginControllerSession {
         }
 
         if (user != null && user.getName() != "" && user.getPassword() != "") {
-//            model.addAttribute("locale", messageSource.getMessage("locale.value", new String[]{locale.getDisplayName(locale)}, locale));
             session.setAttribute("locale", messageSource.getMessage("locale.value", new String[]{locale.getDisplayName(locale)}, locale));
         }
         logger.info("Returning main.jsp page");

@@ -5,6 +5,7 @@ import com.kirilo.springMVC.models.UploadedFile;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
@@ -14,11 +15,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Locale;
 
 // https://memorynotfound.com/spring-mvc-file-upload-example-validator/
 @Controller
@@ -43,6 +44,9 @@ public class SingleFileController {
     @Autowired
     @Qualifier("multipleFileValidator")
     private Validator multipleFV;
+
+    @Autowired
+    private MessageSource messageSource;
 
 //    https://stackoverflow.com/questions/3721122/spring-validation-with-valid/3721343#3721343
     @InitBinder("uploadedFile")
@@ -83,7 +87,7 @@ public class SingleFileController {
     }
 
     @RequestMapping(value = "/uploadMultipleFile", method = RequestMethod.POST)
-    public String uploadMultipleFileHandler(@Validated @ModelAttribute("multiUploadedFile") MultiUploadedFile form, BindingResult bindingResult, HttpSession session) {
+    public String uploadMultipleFileHandler(@Validated @ModelAttribute("multiUploadedFile") MultiUploadedFile form, BindingResult bindingResult, HttpSession session, Locale locale) {
         String message = "";
 
         if (bindingResult.hasErrors()) {
@@ -95,6 +99,7 @@ public class SingleFileController {
 /*        if (bindingResult.hasErrors()) {
             message = "You failed to upload because the files are empty!";
         }*/ else if (form != null) {
+            session.setAttribute("locale", messageSource.getMessage("locale.value", new String[]{locale.getDisplayName(locale)}, locale));
             logger.info("File: " + form);
 
             for (UploadedFile uploadedFile: form.getFiles()) {
@@ -103,6 +108,7 @@ public class SingleFileController {
             }
         }
         session.setAttribute("message", message);
+        messageSource.getMessage("locale.value", new String[]{locale.getDisplayName(locale)}, locale);
         return "redirect:/files-main-page";
     }
 

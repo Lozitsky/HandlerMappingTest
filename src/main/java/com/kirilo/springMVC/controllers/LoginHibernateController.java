@@ -20,7 +20,6 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.Locale;
 import java.util.Map;
@@ -48,14 +47,13 @@ public class LoginHibernateController {
     private MessageSource messageSource;
 
     @RequestMapping(value = "/login.dto", method = RequestMethod.GET)
-    public String main(@ModelAttribute("loginDto") LoginDTO loginDTO, BindingResult bindingResult, Locale locale, HttpSession session, Model model) {
+    public String main(@ModelAttribute("loginDto") LoginDTO loginDTO, BindingResult bindingResult, Locale locale, Model model) {
 
         if (!bindingResult.hasErrors()) {
 
             if (loginDTO.getName() != null && loginDTO.getPassword() != null && !loginDTO.getName().equals("") && !loginDTO.getPassword().equals("")) {
-                LoginDTO sessionUser = (LoginDTO) session.getAttribute("loginDto");
                 model.addAttribute("locale", messageSource.getMessage("locale.value", new String[]{locale.getDisplayName(locale)}, locale));
-                return "multiple-main.dto";
+                return "redirect:/mainpage.dto";
             }
             logger.info(locale.getDisplayLanguage());
             String message = messageSource.getMessage("locale.value", new String[]{locale.getDisplayName(locale)}, locale);
@@ -72,7 +70,6 @@ public class LoginHibernateController {
         if (result.hasErrors()) {
             logger.info("Returning logindto.jsp page");
             modelAndView.setViewName("logindto");
-//            return modelAndView;
         }
 
         if (loginDTO != null && loginDTO.getName() != "" && loginDTO.getPassword() != "") {
@@ -83,12 +80,12 @@ public class LoginHibernateController {
         }
         logger.info("Returning main.dto.jsp page");
         return modelAndView;
-//        return "redirect:/mainpage.dto";
     }
 
     @RequestMapping(value = "/mainpage.dto", method = RequestMethod.GET)
-    public String goMainPage(HttpServletRequest request){
+    public String goMainPage(HttpServletRequest request, Model model, Locale locale){
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+        model.addAttribute("locale", messageSource.getMessage("locale.value", new String[]{locale.getDisplayName(locale)}, locale));
         if (flashMap != null) {
             logger.info("redirect!");
         } else {
