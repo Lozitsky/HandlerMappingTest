@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.sql.SQLException;
 
+//https://www.journaldev.com/2651/spring-mvc-exception-handling-controlleradvice-exceptionhandler-handlerexceptionresolver
 @Controller
 public class ExceptionsController {
     private static final Logger logger = Logger.getLogger(ExceptionsController.class);

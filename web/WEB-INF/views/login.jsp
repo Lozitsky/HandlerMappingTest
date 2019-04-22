@@ -16,6 +16,29 @@
     <link href="<c:url value="/resources/css/reset.css"/>" rel="stylesheet">
     <link href="<c:url value="/resources/css/error.css"/>" rel="stylesheet">
     <title>Login Page</title>
+
+    <script src="http://code.jquery.com/jquery-3.3.1.js"></script>
+
+    <script>
+        function doAjax() {
+            $.ajax({
+                url: 'checkStrength',
+                data: {password: $('#password').val()},
+                success: function (data) {
+                    //first case. We check value of "strengthValue" and change its color
+                    /*if (data === "WEAK") {
+                        $("#strengthValue").css("color", "red");
+                    } else if (data === "AVERAGE") {
+                        $("#strengthValue").css("color", "orange");
+                    } else {
+                        $("#strengthValue").css("color", "green");
+                    }*/
+
+                    $("#strengthValue").html(data);
+                }
+            });
+        }
+    </script>
 </head>
 <body>
 
@@ -29,19 +52,24 @@
             <a href="?lang=uk">uk</a>
             <a href="?lang=en">en</a>
         </p>
-        <form:label path="name"><spring:message code="name.value"/> <form:errors path="name" cssClass="error"/></form:label>
+        <form:label path="name"><spring:message code="name.value"/> <form:errors path="name"
+                                                                                 cssClass="error"/></form:label>
         <spring:message code="name.placeholder" var="namePlaceholder"/>
         <form:input path="name" placeholder="${namePlaceholder}" required=""/>
 
-        <form:label path="password"><spring:message code="password.value"/><form:errors path="password" cssClass="error"/></form:label>
+        <form:label path="password"><spring:message code="password.value"/>
+            <form:errors path="password" cssClass="error"/>
+            <span style="float: right" id="strengthValue"></span>
+        </form:label>
         <spring:message code="password.placeholder" var="passwordPlaceholder"/>
-        <form:password path="password" placeholder="${passwordPlaceholder}" required=""/>
+        <form:password path="password" placeholder="${passwordPlaceholder}" required="" onkeyup="doAjax()"/>
     </fieldset>
     <footer>
         <form:checkbox path="admin"/>
         <form:label path="admin"><spring:message code="admin.value"/></form:label>
 
-        <input type="submit" class="btnLogin" value=<spring:message code="button.login"/> tabindex="4">
+        <input type="submit" class="btnLogin" value=
+            <spring:message code="button.login"/> tabindex="4">
     </footer>
 </form:form>
 

@@ -26,6 +26,14 @@ import java.util.Locale;
 public class LoginControllerSession {
     private static final Logger logger = Logger.getLogger(LoginControllerSession.class);
 
+    private static final int WEAK_STRENGTH = 1;
+    private static final int AVERAGE_STRENGTH = 5;
+    private static final int STRONG_STRENGTH = 7;
+
+    private static final String WEAK_COLOR = "#FF0000";
+    private static final String AVERAGE_COLOR = "#FF9900";
+    private static final String STRONG_COLOR = "#0099CC";
+
     @Autowired
     @Qualifier("userValidator")
     private Validator validator;
@@ -42,6 +50,25 @@ public class LoginControllerSession {
 
     @Autowired
     private MessageSource messageSource;
+
+
+    @RequestMapping(value = "/checkStrength", method = RequestMethod.GET, produces = {"text/html; charset=UTF-8"})
+    public @ResponseBody
+    String checkStrength(@RequestParam String password, Locale locale) {
+        String result = "<span style='color:%s; font-weight:bold;'>%s</span>";
+
+        if (password.length() >= WEAK_STRENGTH && password.length() < AVERAGE_STRENGTH) {
+//            return "WEAK";
+            return String.format(result, WEAK_COLOR, messageSource.getMessage("password.strength.weak", new String[]{locale.getDisplayName(locale)}, locale));
+        } else if (password.length() >= AVERAGE_STRENGTH && password.length() < STRONG_STRENGTH) {
+//            return "AVERAGE";
+            return String.format(result, AVERAGE_COLOR, messageSource.getMessage("password.strength.average", new String[]{locale.getDisplayName(locale)}, locale));
+        } else if (password.length() >= STRONG_STRENGTH){
+//            return "STRONG";
+            return String.format(result, STRONG_COLOR, messageSource.getMessage("password.strength.strong", new String[]{locale.getDisplayName(locale)}, locale));
+        }
+        return "";
+    }
 
 
     @RequestMapping(value = "/login.do", method = RequestMethod.GET)
